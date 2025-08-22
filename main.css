@@ -26,4 +26,7 @@ html, body {
 
 .content {
   position: relative;
+  margin-left: 200px;
+  padding: 20px;
 }
+
