@@ -1,3 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=Merriweather&display=swap');
+
 .credits {
   color: #959595;
+}
+
+html, body {
+  margin: 0; 
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  font-family: "Merriweather" !important;
+}
+
+.sidebar {
+  position: fixed;
+  left: 0; top: 0; bottom: 0;
+  width: 200px;
+  overflow-y: auto;
+  background: #ddd;
+  border-right: 2px solid #aaa;
+  padding: 10px;
+  z-index: 2;
 }
