@@ -1,32 +1,98 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>Engineering Journal</title>
-    
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="main.css">
-  </head>
+<html lang="en">
+<head>
+  <link rel="stylesheet" href="main.css">
+  <meta charset="UTF-8">
+  <title>Engineering Journal</title>
+  <link rel="stylesheet" href="styles.css">
 
-  <body>
-    <div class="content">
-      <h1>Engineering Journal</h1>
-      <h3 class="credits">Jack Harrop</h3>
-  
-      <h2>Initial Planning and Design</h2>
-  
-      <h2>Code Development and Testing</h2>
-  
-      <h2>Challenges and Debugging</h2>
-  
-      <h2>Final Robot Design and Code</h2>
-  
-      <h2>Reflection and Evaluation</h2>
-  
-      <h2>References</h2>
-    </div>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/discord.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/python.min.js"></script>
 
-    <div id="sidebar">
-      
-    </div>
-  </body>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+        hljs.highlightAll();
+    });
+  </script>
+</head>
+<body>
+  <div id="sidebar">
+    <h2>Journal</h2>
+    <ul>
+      <li><a href="#planning">Planning & Design</a></li>
+      <li><a href="#code">Code Development</a></li>
+      <li><a href="#debugging">Challenges</a></li>
+      <li><a href="#final">Final Design</a></li>
+      <li><a href="#reflection">Reflection</a></li>
+      <li><a href="#references">References</a></li>
+    </ul>
+  </div>
+
+  <div class="content">
+    <h1>Engineering Journal</h1>
+    <h3 class="credits">Jack Harrop</h3>
+
+    <h2 id="planning">Initial Planning and Design</h2>
+    <h3>Rules and requirements</h3>
+    <p>The RoboQuest challenge consists of two teams, Blockers and Shooters. Blockers aim to ram and chase the Shooters, while the Shooters aim to find and knock over the target in the center of the field. The field consists of a black rectangle with a red circle in the center, and another black square inside the red circle.</p>
+
+    <h3>Main objectives & plan</h3>
+    <p>As a shooter, my main objective is to knock over the target in the center. My plan is to allow the robot to detect black and red, then define functions for each colour.</p>
+
+    <h3>Features and behaviours</h3>
+    <p>The robot features turning a random rotation between 90 and 180 degrees when black is seen, and for red the robot stops, rotates until the target is seen with the ultrasonic sensor, then shoots.</p>
+
+    <h2 id="code">Code Development and Testing</h2>
+    <p></p>
+
+    <h2 id="debugging">Challenges and Debugging</h2>
+    <p></p>
+
+    <h2 id="final">Final Robot Design and Code</h2>
+  <pre>
+TARGET_DISTANCE <span class="operator">=</span> <span class="number">40</span>
+SPEED <span class="operator">=</span> <span class="number">15</span>
+
+<span class="keyword">while</span> <span class="keyword">True</span>:
+    <span class="variable">hue</span> <span class="operator">=</span> <span class="class">Colour</span>.<span class="method">readSensor</span>(<span class="class">CS</span>.<span class="property">HUE</span>, <span class="number">1</span>)
+    <span class="variable">bright</span> <span class="operator">=</span> <span class="class">Colour</span>.<span class="method">readSensor</span>(<span class="class">CS</span>.<span class="property">BRIGHT</span>, <span class="number">1</span>)
+    <span class="variable">dis</span> <span class="operator">=</span> <span class="class">Ultrasonic</span>.<span class="method">read</span>()
+    <span class="variable">rot</span> <span class="operator">=</span> <span class="class">Math</span>.<span class="method">randint</span>(<span class="number">-240</span>, <span class="number">240</span>)
+
+    <span class="keyword">if</span> <span class="class">Math</span>.<span class="method">isBetween</span>(<span class="variable">hue</span>, <span class="number">30</span>, <span class="number">70</span>):
+        <span class="class">Motors</span>.<span class="method">write</span>(<span class="number">0</span>)
+        <span class="function">print</span>(<span class="string">'red'</span>)
+        <span class="keyword">break</span>
+    <span class="keyword">elif</span> <span class="class">Math</span>.<span class="method">isBetween</span>(<span class="variable">bright</span>, <span class="number">66</span>, <span class="number">150</span>) <span class="keyword">and</span> <span class="class">Math</span>.<span class="method">isBetween</span>(<span class="variable">hue</span>, <span class="number">90</span>, <span class="number">105</span>):
+        <span class="function">print</span>(<span class="string">'black'</span>)
+        <span class="function">Black</span>()
+    <span class="keyword">elif</span> <span class="variable">dis</span> <span class="operator"><</span> <span class="number">5</span>:
+        <span class="function">print</span>(<span class="string">'too close'</span>)
+        <span class="class">Motors</span>.<span class="method">turnDegrees</span>(<span class="number">104</span>, <span class="variable">SPEED</span>)
+        <span class="class">Motors</span>.<span class="method">write</span>(<span class="variable">SPEED</span>)
+    <span class="keyword">else</span>:
+        <span class="function">print</span>(<span class="string">'nothin'</span>)
+        <span class="class">Motors</span>.<span class="method">write</span>(<span class="variable">SPEED</span>)
+
+<span class="keyword">while</span> <span class="keyword">True</span>:
+    <span class="variable">dis</span> <span class="operator">=</span> <span class="class">Ultrasonic</span>.<span class="method">read</span>()
+    <span class="keyword">if</span> <span class="variable">dis</span> <span class="operator"><=</span> <span class="variable">TARGET_DISTANCE</span>:
+        <span class="function">print</span>(<span class="string">'target'</span>)
+        <span class="class">Motors</span>.<span class="method">write</span>(<span class="number">0</span>)
+        <span class="function">Launch</span>()
+        <span class="keyword">break</span>
+    <span class="keyword">else</span>:
+        <span class="function">print</span>(<span class="string">'spinnin'</span>)
+        <span class="class">Motors</span>.<span class="method">turnDegrees</span>(<span class="number">10</span>, <span class="variable">SPEED</span>)
+</pre>
+
+
+  <h2 id="reflection">Reflection and Evaluation</h2>
+  <p></p>
+
+  <h2 id="references">References</h2>
+  <p></p>
+</div>
+</body>
 </html>

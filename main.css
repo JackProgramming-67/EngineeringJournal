@@ -1,32 +1,110 @@
 @import url('https://fonts.googleapis.com/css2?family=Merriweather&display=swap');
 
-.credits {
-  color: #959595;
-}
-
 html, body {
-  margin: 0; 
+  margin: 0;
   padding: 0;
   height: 100%;
   width: 100%;
-  overflow: hidden;
-  font-family: "Merriweather" !important;
+  font-family: "Merriweather", serif;
+  background: #f8f8f8;
+  color: #333;
+}
+
+.credits {
+  color: #777;
+  font-weight: normal;
 }
 
 #sidebar {
   position: fixed;
-  left: 0; top: 0; bottom: 0;
-  width: 200px;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 220px;
   overflow-y: auto;
-  background: #ddd;
-  border-right: 2px solid #aaa;
-  padding: 10px;
+  background: #2e3a46;
+  border-right: 2px solid #1f292f;
+  padding: 20px;
   z-index: 2;
+  color: #fff;
+}
+
+#sidebar h2 {
+  font-size: 20px;
+  margin-bottom: 15px;
+  border-bottom: 1px solid #444;
+  padding-bottom: 5px;
+}
+
+#sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+#sidebar ul li {
+  margin: 12px 0;
+}
+
+#sidebar ul li a {
+  text-decoration: none;
+  color: #ccc;
+  transition: color 0.2s;
+}
+
+#sidebar ul li a:hover {
+  color: #fff;
 }
 
 .content {
-  position: relative;
-  margin-left: 200px;
-  padding: 20px;
+  margin-left: 220px;
+  padding: 100px;
+  max-width: 900px;
+}
+
+h1 {
+  font-size: 40px;
+  margin-bottom: 5px;
+}
+
+h2 {
+  margin-top: 40px;
+  border-bottom: 2px solid #ddd;
+  padding-bottom: 6px;
+}
+
+pre {
+  background: #23272a;
+  color: #fff;
+  padding: 15px;
+  border-radius: 8px;
+  overflow-x: auto;
+  font-family: "Fira Code", monospace;
+  font-size: 14px;
+  line-height: 1.5;
+  margin: 20px 0;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.keyword {
+  color: #f9273c;
+}
+
+.method {
+  color: #66d3e8;
+}
+
+.string {
+  color: #e6ba3c;
+}
+
+.number, .literal {
+  color: #ae80f8;
+}
+
+.symbol,
+.operator,
+.punctuation {
+  color: #f9273c;
 }
 
