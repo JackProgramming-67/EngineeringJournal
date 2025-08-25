@@ -38,3 +38,5 @@ function initMouseTracking() {
         });
     });
 }
+
+setTimeout(initMouseTracking, 1000);
