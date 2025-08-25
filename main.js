@@ -23,10 +23,7 @@ function initMouseTracking() {
             const centerX = rect.width / 2;
             const centerY = rect.height / 2;
 
-            let factor = 10;
-            if (card.classList.contains('project-card')) {
-                factor = 25;
-            }
+            let factor = 3;
 
             targetX = (y - centerY) / factor;
             targetY = (centerX - x) / factor;
