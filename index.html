@@ -35,23 +35,36 @@
     <h3 class="credits">Jack Harrop</h3>
 
     <h2 id="planning">Initial Planning and Design</h2>
-    <h3>Rules and requirements</h3>
-    <p>The RoboQuest challenge consists of two teams, Blockers and Shooters. Blockers aim to ram and chase the Shooters, while the Shooters aim to find and knock over the target in the center of the field. The field consists of a black rectangle with a red circle in the center, and another black square inside the red circle.</p>
-
-    <h3>Main objectives & plan</h3>
-    <p>As a shooter, my main objective is to knock over the target in the center. My plan is to allow the robot to detect black and red, then define functions for each colour.</p>
-
-    <h3>Features and behaviours</h3>
-    <p>The robot features turning a random rotation between 90 and 180 degrees when black is seen, and for red the robot stops, rotates until the target is seen with the ultrasonic sensor, then shoots.</p>
+    <p>The RoboQuest Challenge requires robots to navigate an arena as part of either a shooting or blocking team. I chose to be a shooter, so my robot's main goal is to reach the center target inside a red circle and successfully launch a ping pong ball. To achieve this, I needed to design code that could detect colors accurately, avoid blocker, and go back to reload</p>
+    <p>My plan involves continuously reading the hue and brightness values from the color sensor. If the sensor detects black, the robot should rotate a random degree between 90 and 180 to stay within boundaries, while detecting red will indicate the target and trigger the launch code. An ultrasonic sensor is also required to detect nearby obstacles or the blocker, preventing collisions while navigating.</p>
 
     <h2 id="code">Code Development and Testing</h2>
-    <p></p>
+    <p>The initial code was very basic, relying solely on hue detection to find the target. Testing showed that sensor readings were inconsistent, with black often misread as another color. To improve accuracy, I incorporated brightness detection. Black had a consistently low brightness, which allowed the robot to detect boundaries easily. By combining hue and brightness, the robot could differentiate between the floor, black boundaries, and the red circle.</p>
+    <p>Testing sessions involved placing the robot on the coloured tape / floor and observing how well it detected the colour. I learned that adding an ultrasonic sensor was required to prevent collisions with the blocker or anything that could block its path. I made also updated the movement logic and added random turns when black was detected, to prevent leaving the rectangle. Over multiple iterations, the robot's performance improved and became more consistent in navigating the arena.</p>
+    <pre class="code-embed">
+<span class="keyword">if</span> <span class="class">Math</span>.<span class="method">isBetween</span>(<span class="variable">hue</span>, <span class="number">30</span>, <span class="number">70</span>):
+  <span class="class">Motors</span>.<span class="method">write</span>(<span class="number">0</span>)
+  <span class="function">print</span>(<span class="string">'Red Line Detected'</span>)
+  <span class="keyword">break</span>
+<span class="keyword">elif</span> <span class="class">Math</span>.<span class="method">isBetween</span>(<span class="variable">bright</span>, <span class="number">66</span>, <span class="number">150</span>) <span class="keyword">and</span> <span class="class">Math</span>.<span class="method">isBetween</span>(<span class="variable">hue</span>, <span class="number">90</span>, <span class="number">105</span>):
+  <span class="function">print</span>(<span class="string">'Black Line Detected'</span>)
+  <span class="function">Black</span>()
+<span class="keyword">elif</span> <span class="variable">dis</span> <span class="operator"><</span> <span class="number">5</span>:
+  <span class="function">print</span>(<span class="string">'Blockage Detected'</span>)
+  <span class="class">Motors</span>.<span class="method">turnDegrees</span>(<span class="number">104</span>, <span class="variable">SPEED</span>)
+  <span class="class">Motors</span>.<span class="method">write</span>(<span class="variable">SPEED</span>)
+<span class="keyword">else</span>:
+  <span class="function">print</span>(<span class="string">'Floor Detected'</span>)
+  <span class="class">Motors</span>.<span class="method">write</span>(<span class="variable">SPEED</span>)
+    </pre>
 
     <h2 id="debugging">Challenges and Debugging</h2>
-    <p></p>
+    <p>One major problem was the inconsistency of color sensor readings. The robot sometimes misidentified red or black for floor, causing it to get stuck and turn away from red. Another challenge was handling obstacles without interrupting the path-following behavior. I solved these problems by combining hue and brightness detection, and by adding ultrasonic readings to detect nearby objects.</p>
+    <p>The types of errors I encountered were mainly logic errors. Sometimes the robot would detect the wrong color and stop unnecessarily or fail to avoid the black line. Through testing, I refined the conditions and thresholds for hue and brightness, which improved overall reliability and ensured that the robot could reach the target easier.</p>
 
     <h2 id="final">Final Robot Design and Code</h2>
-  <pre class="code-embed">
+    <p>The final robot can successfully find the red circle, avoid black lines, avoid blockers and other close objects, detect the target, and launch a ping pong ball upon reaching it. It continuously reads the color, brighness and distance sensors. The code loops through sensor readings, stopping and shooting when the target is detected, turning randomly when edge is reached, and otherwise going forward. The integration of hue, brightness, and ultrasonic sensors ensures accuracy and smooth operation throughout the challenge.</p>
+    <pre class="code-embed">
 TARGET_DISTANCE <span class="operator">=</span> <span class="number">40</span>
 SPEED <span class="operator">=</span> <span class="number">15</span>
 
@@ -86,14 +99,13 @@ SPEED <span class="operator">=</span> <span class="number">15</span>
     <span class="keyword">else</span>:
         <span class="function">print</span>(<span class="string">'spinnin'</span>)
         <span class="class">Motors</span>.<span class="method">turnDegrees</span>(<span class="number">10</span>, <span class="variable">SPEED</span>)
-</pre>
+    </pre>
 
+    <h2 id="reflection">Reflection and Evaluation</h2>
+    <p>The project worked pretty well overall. The robot successfully navigated the rectangle, mostly avoids blockers, and launched at the target. If I were to improve the design, I would work more on detection of the blockers, by looking at the code that the blockers have created to find strategies to defend against them.</p>
 
-  <h2 id="reflection">Reflection and Evaluation</h2>
-  <p></p>
-
-  <h2 id="references">References</h2>
-  <p></p>
+    <h2 id="references">References</h2>
+    <p>No references were used for this journal or my code.</p>
 </div>
 </body>
 </html>

@@ -23,7 +23,7 @@ function initMouseTracking() {
             const centerX = rect.width / 2;
             const centerY = rect.height / 2;
 
-            let factor = 3;
+            let factor = 120;
 
             targetX = (y - centerY) / factor;
             targetY = (centerX - x) / factor;
