@@ -66,64 +66,71 @@
     <h2 id="final">Final Robot Design and Code</h2>
     <p>The final robot can successfully find the red circle, avoid black lines, avoid blockers and other close objects, detect the target, and launch a ping pong ball upon reaching it. It continuously reads the color, brighness and distance sensors. The code loops through sensor readings, stopping and shooting when the target is detected, turning randomly when edge is reached, and otherwise going forward. The integration of hue, brightness, and ultrasonic sensors ensures accuracy and smooth operation throughout the challenge.</p>
     <pre class="code-embed">
+<span class="comment"># --------------------</span>
+<span class="comment"># Functions</span>
+<span class="comment"># --------------------</span>
+
+<span class="keyword">def</span> <span class="function">Black</span>():
+  <span class="class">Motors</span>.<span class="method">write</span>(<span class="number">0</span>)
+  <span class="class">Motors</span>.<span class="method">turnDegrees</span>(rot, speed)
+  <span class="class">Motors</span>.<span class="method">write</span>(speed)
+
+<span class="keyword">def</span> <span class="function">LaunchReloadCycle</span>():
+  <span class="keyword">while</span> <span class="constant">True</span>:
+    <span class="comment"># Launch</span>
+    <span class="class">Servos</span>.<span class="method">left</span>(<span class="number">-90</span>)
+    <span class="function">delay</span>(<span class="number">3</span>)
+    <span class="class">Servos</span>.<span class="method">left</span>(<span class="number">0</span>)
+    <span class="class">Servos</span>.<span class="method">left</span>(<span class="number">90</span>)
+    <span class="function">delay</span>(<span class="number">3</span>)
+    <span class="class">Servos</span>.<span class="method">left</span>(<span class="number">0</span>)
+
+    <span class="comment"># Reload</span>
+    <span class="keyword">while not</span> <span class="class">Math</span>.<span class="method">isBetween</span>(bright, <span class="number">66</span>, <span class="number">150</span>) <span class="keyword">and</span> <span class="class">Math</span>.<span class="method">isBetween</span>(hue, <span class="number">90</span>, <span class="number">105</span>):
+      <span class="class">Motors</span>.<span class="method">write</span>(<span class="number">-30</span>)
+    <span class="class">Motors</span>.<span class="method">write</span>(<span class="number">0</span>)
+    <span class="function">delay</span>(<span class="number">10</span>)
+    <span class="keyword">while not</span> <span class="class">Math</span>.<span class="method">isBetween</span>(hue, <span class="number">30</span>, <span class="number">70</span>):
+      <span class="class">Motors</span>.<span class="method">write</span>(<span class="number">30</span>)
+
+<span class="comment"># --------------------</span>
+<span class="comment"># Robot 2015 program</span>
+<span class="comment"># --------------------</span>
 targ_dis <span class="operator">=</span> <span class="number">40</span>
 speed <span class="operator">=</span> <span class="number">15</span>
 
-<span class="keyword">def</span> Reload():
-  <span class="keyword">while not</span> <span class="class">Math</span>.<span class="method">isBetween</span>(<span class="variable">bright</span>, <span class="number">66</span>, <span class="number">150</span>) <span class="keyword">and</span> <span class="class">Math</span>.<span class="method">isBetween</span>(<span class="variable">hue</span>, <span class="number">90</span>, <span class="number">105</span>):
-    <span class="class">Motors</span>.<span class="method">write</span>(<span class="number">-30</span>)
-  <span class="class">Motors</span>.<span class="method">write</span>(<span class="number">0</span>)
-  
-  <span class="class">Time</span>.<span class="method">sleep</span>(<span class="number">10</span>)
-  
-  <span class="keyword">while not</span> <span class="class">Math</span>.<span class="method">isBetween</span>(<span class="variable">hue</span>, <span class="number">30</span>, <span class="number">70</span>):
-    <span class="class">Motors</span>.<span class="method">write</span>(<span class="number">30</span>)
-  <span class="function">Launch</span>()
+<span class="keyword">while</span> <span class="constant">True</span>:
+  hue <span class="operator">=</span> <span class="class">Colour</span>.<span class="method">readSensor</span>(<span class="class">CS</span>.HUE, <span class="number">1</span>)
+  bright <span class="operator">=</span> <span class="class">Colour</span>.<span class="method">readSensor</span>(<span class="class">CS</span>.BRIGHT, <span class="number">1</span>)
+  dis <span class="operator">=</span> <span class="class">Ultrasonic</span>.<span class="method">read</span>()
+  rot <span class="operator">=</span> <span class="class">Math</span>.<span class="method">randint</span>(<span class="number">-240</span>, <span class="number">240</span>)
 
-<span class="keyword">def</span> Launch():
-  <span class="class">Servos</span>.<span class="method">left</span>(<span class="number">-90</span>)
-  <span class="function">delay</span>(<span class="number">3</span>)
-  <span class="class">Servos</span>.<span class="method">left</span>(<span class="number">0</span>)
-  <span class="class">Servos</span>.<span class="method">left</span>(<span class="number">90</span>)
-  <span class="function">delay</span>(<span class="number">3</span>)
-  <span class="class">Servos</span>.<span class="method">left</span>(<span class="number">0</span>)
-
-  <span class="function">Reload</span>()
-  <span class="keyword">break</span>
-
-<span class="keyword">while</span> <span class="keyword">True</span>:
-  <span class="variable">hue</span> <span class="operator">=</span> <span class="class">Colour</span>.<span class="method">readSensor</span>(<span class="class">CS</span>.<span class="property">HUE</span>, <span class="number">1</span>)
-  <span class="variable">bright</span> <span class="operator">=</span> <span class="class">Colour</span>.<span class="method">readSensor</span>(<span class="class">CS</span>.<span class="property">BRIGHT</span>, <span class="number">1</span>)
-  <span class="variable">dis</span> <span class="operator">=</span> <span class="class">Ultrasonic</span>.<span class="method">read</span>()
-  <span class="variable">rot</span> <span class="operator">=</span> <span class="class">Math</span>.<span class="method">randint</span>(<span class="number">-240</span>, <span class="number">240</span>)
-
-  <span class="keyword">if</span> <span class="class">Math</span>.<span class="method">isBetween</span>(<span class="variable">hue</span>, <span class="number">30</span>, <span class="number">70</span>):
+  <span class="keyword">if</span> <span class="class">Math</span>.<span class="method">isBetween</span>(hue, <span class="number">30</span>, <span class="number">70</span>):
     <span class="class">Motors</span>.<span class="method">write</span>(<span class="number">0</span>)
     <span class="function">print</span>(<span class="string">'red'</span>)
     <span class="keyword">break</span>
-  <span class="keyword">elif</span> <span class="class">Math</span>.<span class="method">isBetween</span>(<span class="variable">bright</span>, <span class="number">66</span>, <span class="number">150</span>) <span class="keyword">and</span> <span class="class">Math</span>.<span class="method">isBetween</span>(<span class="variable">hue</span>, <span class="number">90</span>, <span class="number">105</span>):
+  <span class="keyword">elif</span> <span class="class">Math</span>.<span class="method">isBetween</span>(bright, <span class="number">66</span>, <span class="number">150</span>) <span class="keyword">and</span> <span class="class">Math</span>.<span class="method">isBetween</span>(hue, <span class="number">90</span>, <span class="number">105</span>):
     <span class="function">print</span>(<span class="string">'black'</span>)
     <span class="function">Black</span>()
-  <span class="keyword">elif</span> <span class="variable">dis</span> <span class="operator"><</span> <span class="number">5</span>:
+  <span class="keyword">elif</span> dis <span class="operator">&lt;</span> <span class="number">5</span>:
     <span class="function">print</span>(<span class="string">'too close'</span>)
-    <span class="class">Motors</span>.<span class="method">turnDegrees</span>(<span class="number">104</span>, <span class="variable">speed</span>)
-    <span class="class">Motors</span>.<span class="method">write</span>(<span class="variable">speed</span>)
+    <span class="class">Motors</span>.<span class="method">turnDegrees</span>(<span class="number">104</span>, speed)
+    <span class="class">Motors</span>.<span class="method">write</span>(speed)
   <span class="keyword">else</span>:
     <span class="function">print</span>(<span class="string">'nothin'</span>)
-    <span class="class">Motors</span>.<span class="method">write</span>(<span class="variable">speed</span>)
+    <span class="class">Motors</span>.<span class="method">write</span>(speed)
 
-<span class="keyword">while</span> <span class="keyword">True</span>:
-  <span class="variable">dis</span> <span class="operator">=</span> <span class="class">Ultrasonic</span>.<span class="method">read</span>()
-  <span class="keyword">if</span> <span class="variable">dis</span> <span class="operator"><=</span> <span class="variable">targ_dis</span>:
+<span class="keyword">while</span> <span class="constant">True</span>:
+  dis <span class="operator">=</span> <span class="class">Ultrasonic</span>.<span class="method">read</span>()
+  <span class="keyword">if</span> dis <span class="operator">&lt;=</span> targ_dis:
     <span class="function">print</span>(<span class="string">'target'</span>)
     <span class="class">Motors</span>.<span class="method">write</span>(<span class="number">0</span>)
-    <span class="function">Launch</span>()
+    <span class="function">LaunchReloadCycle</span>()
     <span class="keyword">break</span>
   <span class="keyword">else</span>:
     <span class="function">print</span>(<span class="string">'spinnin'</span>)
-    <span class="class">Motors</span>.<span class="method">turnDegrees</span>(<span class="number">10</span>, <span class="variable">speed</span>)
+    <span class="class">Motors</span>.<span class="method">turnDegrees</span>(<span class="number">10</span>, speed)
     </pre>
-
 
     <h2 id="reflection">Reflection and Evaluation</h2>
     <p>The project worked pretty well overall. The robot successfully navigated the rectangle, mostly avoids blockers, and launched at the target. If I were to improve the design, I would work more on detection of the blockers, by looking at the code that the blockers have created to find strategies to defend against them.</p>

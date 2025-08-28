@@ -130,3 +130,9 @@ pre:hover {
   height: 100px;
   float: right;
 }
+
+.comment {
+  color: #666666;
+  text-shadow: 0 0 2px rgba(36, 36, 36, 0.5),
+               0 0 4px rgba(53, 53, 53, 0.3);
+}
